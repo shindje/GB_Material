@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">GB_Material</string>
+    <string name="wiki_hint">Поиск в Wikipedia</string>
 </resources>
