@@ -1,11 +1,43 @@
 package com.example.gb_material
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
+import androidx.annotation.StyleRes
+import androidx.appcompat.app.AppCompatActivity
+import kotlinx.android.synthetic.main.activity_main.*
+
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        var prefs = applicationContext.getSharedPreferences("app", MODE_PRIVATE)
+        var themeId = prefs.getInt("themeId", R.style.BlackAndWhiteTheme)
+        setTheme(themeId)
         setContentView(R.layout.activity_main)
+        setSupportActionBar(my_toolbar)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflater = menuInflater
+        inflater.inflate(R.menu.top_action_bar_menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.getItemId()) {
+            R.id.menu_baw_theme -> changeTheme(R.style.BlackAndWhiteTheme)
+            R.id.menu_colourful_theme -> changeTheme(R.style.ColourfulTheme)
+
+        }
+        return true
+    }
+
+    private fun changeTheme(themeId: Int) {
+        var prefs = applicationContext.getSharedPreferences("app", MODE_PRIVATE)
+        val editor = prefs.edit()
+        editor.putInt("themeId", themeId)
+        editor.apply()
+        recreate()
     }
 }
