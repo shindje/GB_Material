@@ -7,12 +7,15 @@ import androidx.annotation.StyleRes
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
+const val sharedPreferencesName: String = "app"
+const val themeIdFieldName: String = "themeId"
 
 class MainActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        var prefs = applicationContext.getSharedPreferences("app", MODE_PRIVATE)
-        var themeId = prefs.getInt("themeId", R.style.BlackAndWhiteTheme)
+        var prefs = applicationContext.getSharedPreferences(sharedPreferencesName, MODE_PRIVATE)
+        var themeId = prefs.getInt(themeIdFieldName, R.style.BlackAndWhiteTheme)
         setTheme(themeId)
         setContentView(R.layout.activity_main)
         setSupportActionBar(my_toolbar)
@@ -34,9 +37,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun changeTheme(themeId: Int) {
-        var prefs = applicationContext.getSharedPreferences("app", MODE_PRIVATE)
+        var prefs = applicationContext.getSharedPreferences(sharedPreferencesName, MODE_PRIVATE)
         val editor = prefs.edit()
-        editor.putInt("themeId", themeId)
+        editor.putInt(themeIdFieldName, themeId)
         editor.apply()
         recreate()
     }
