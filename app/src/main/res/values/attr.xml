@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="common_text_color" format="reference"/>
+    <attr name="header_text_color" format="reference"/>
+    <attr name="edit_text_color" format="reference"/>
+    <attr name="bottom_sheet_text_color" format="reference"/>
+</resources>
