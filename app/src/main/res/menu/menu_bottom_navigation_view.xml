@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/bottom_view_pod"
+        android:icon="@drawable/ic_baseline_photo_24"
+        android:title="@string/picture_of_the_day" />
+
+    <item
+        android:id="@+id/bottom_view_epic"
+        android:icon="@drawable/ic_baseline_globe_24"
+        android:title="@string/earth_camera" />
+
+    <item
+        android:id="@+id/bottom_view_settings"
+        android:icon="@drawable/ic_baseline_settings_24"
+        android:title="@string/settings" />
+</menu>

@@ -2,7 +2,6 @@ package com.example.gb_material.fragment.pod
 
 import android.app.DatePickerDialog
 import android.app.Dialog
-import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -23,15 +22,24 @@ import com.example.gb_material.web.pod.sdf
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.bottom_sheet.*
 import kotlinx.android.synthetic.main.pod_fragment.*
-import java.text.SimpleDateFormat
 import java.util.*
 
-class PictureOfTheDayFragment(val date: String?): Fragment(), DatePickerDialog.OnDateSetListener {
+const val dateFieldName = "date"
+
+class PictureOfTheDayFragment(var date: String?): Fragment(), DatePickerDialog.OnDateSetListener {
+    constructor() : this(null)
+
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout>
     private var datePickerDialog : DialogFragment? = null
 
     private val viewModel: PictureOfTheDayViewModel by lazy {
         ViewModelProviders.of(this).get(PictureOfTheDayViewModel::class.java)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        if (date == null)
+            date = savedInstanceState?.getString(dateFieldName)
     }
 
     override fun onCreateView(
@@ -65,6 +73,12 @@ class PictureOfTheDayFragment(val date: String?): Fragment(), DatePickerDialog.O
             })
         }
         setBottomSheetBehavior(view.findViewById(R.id.bottom_sheet_container))
+        web_view.settings.javaScriptEnabled = true
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString(dateFieldName, date)
     }
 
     private fun renderData(data: PictureOfTheDayData) {
@@ -75,21 +89,22 @@ class PictureOfTheDayFragment(val date: String?): Fragment(), DatePickerDialog.O
                 if (url.isNullOrEmpty()) {
                     Toast.makeText(requireContext(), "URL картинки пустой", Toast.LENGTH_SHORT).show()
                 } else {
-                    eiv_pod.load(url) {
-                        lifecycle(this@PictureOfTheDayFragment)
-                        error(R.drawable.ic_baseline_image_not_supported_24)
-                        placeholder(R.drawable.ic_baseline_sync_24)
+                    if (serverResponseData.mediaType == "video") {
+                        eiv_pod.visibility = View.GONE
+                        web_view.visibility = View.VISIBLE
+                        web_view.loadUrl(url)
+                    } else {
+                        web_view.visibility = View.GONE
+                        eiv_pod.visibility = View.VISIBLE
+                        eiv_pod.load(url) {
+                            lifecycle(this@PictureOfTheDayFragment)
+                            error(R.drawable.ic_baseline_image_not_supported_24)
+                            placeholder(R.drawable.ic_baseline_sync_24)
+                        }
                     }
                 }
                 bottom_sheet_description_header.text = serverResponseData.title
                 bottom_sheet_description.text = serverResponseData.explanation
-            }
-            is PictureOfTheDayData.Loading -> {
-                //Отобразите загрузку
-                //showLoading()
-            }
-            is PictureOfTheDayData.Error -> {
-
             }
         }
     }

@@ -3,5 +3,5 @@
     <attr name="common_text_color" format="reference"/>
     <attr name="header_text_color" format="reference"/>
     <attr name="edit_text_color" format="reference"/>
-    <attr name="bottom_sheet_text_color" format="reference"/>
+    <attr name="background_color" format="reference"/>
 </resources>

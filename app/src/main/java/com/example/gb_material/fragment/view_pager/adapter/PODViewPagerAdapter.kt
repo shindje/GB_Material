@@ -11,7 +11,7 @@ private const val YESTERDAY = 0
 private const val TODAY = 1
 private const val DATE = 2
 
-class podViewPagerAdapter(private val fragmentManager: FragmentManager) :
+class PODViewPagerAdapter(private val fragmentManager: FragmentManager) :
         FragmentPagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
     private val fragments = arrayOf(

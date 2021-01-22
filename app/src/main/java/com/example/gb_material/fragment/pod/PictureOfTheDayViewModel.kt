@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.gb_material.BuildConfig
-import com.example.gb_material.web.pod.PODRetrofitImpl
+import com.example.gb_material.web.RetrofitImpl
 import com.example.gb_material.web.pod.PODServerResponseData
 import com.example.gb_material.web.pod.PictureOfTheDayData
 import retrofit2.Call
@@ -13,7 +13,7 @@ import retrofit2.Response
 
 class PictureOfTheDayViewModel (
         private val liveDataForViewToObserve: MutableLiveData<PictureOfTheDayData> = MutableLiveData(),
-        private val retrofitImpl: PODRetrofitImpl = PODRetrofitImpl()
+        private val retrofitImpl: RetrofitImpl = RetrofitImpl()
 ) : ViewModel() {
 
         fun getData(date: String?): LiveData<PictureOfTheDayData> {
@@ -27,7 +27,7 @@ class PictureOfTheDayViewModel (
             if (apiKey.isBlank()) {
                 PictureOfTheDayData.Error(Throwable("You need API key"))
             } else {
-                retrofitImpl.getRetrofitImpl().getPictureOfTheDay(apiKey, date).enqueue(object :
+                retrofitImpl.getPODRetrofitImpl().getPictureOfTheDay(apiKey, date).enqueue(object :
                     Callback<PODServerResponseData> {
                     override fun onResponse(
                             call: Call<PODServerResponseData>,
