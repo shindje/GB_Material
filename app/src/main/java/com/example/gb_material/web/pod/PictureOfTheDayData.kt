@@ -1,4 +1,4 @@
-package com.example.gb_material.web
+package com.example.gb_material.web.pod
 
 sealed class PictureOfTheDayData {
     data class Success(val serverResponseData: PODServerResponseData) : PictureOfTheDayData()

@@ -1,36 +1,37 @@
-package com.example.gb_material
+package com.example.gb_material.fragment.pod
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.gb_material.web.PODRetrofitImpl
-import com.example.gb_material.web.PODServerResponseData
-import com.example.gb_material.web.PictureOfTheDayData
+import com.example.gb_material.BuildConfig
+import com.example.gb_material.web.RetrofitImpl
+import com.example.gb_material.web.pod.PODServerResponseData
+import com.example.gb_material.web.pod.PictureOfTheDayData
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class PictureOfTheDayViewModel (
-    private val liveDataForViewToObserve: MutableLiveData<PictureOfTheDayData> = MutableLiveData(),
-    private val retrofitImpl: PODRetrofitImpl = PODRetrofitImpl()
+        private val liveDataForViewToObserve: MutableLiveData<PictureOfTheDayData> = MutableLiveData(),
+        private val retrofitImpl: RetrofitImpl = RetrofitImpl()
 ) : ViewModel() {
 
-        fun getData(): LiveData<PictureOfTheDayData> {
-            sendServerRequest()
+        fun getData(date: String?): LiveData<PictureOfTheDayData> {
+            sendServerRequest(date)
             return liveDataForViewToObserve
         }
 
-        private fun sendServerRequest() {
+        private fun sendServerRequest(date: String?) {
             liveDataForViewToObserve.value = PictureOfTheDayData.Loading(null)
             val apiKey: String = BuildConfig.NASA_API_KEY
             if (apiKey.isBlank()) {
                 PictureOfTheDayData.Error(Throwable("You need API key"))
             } else {
-                retrofitImpl.getRetrofitImpl().getPictureOfTheDay(apiKey).enqueue(object :
+                retrofitImpl.getPODRetrofitImpl().getPictureOfTheDay(apiKey, date).enqueue(object :
                     Callback<PODServerResponseData> {
                     override fun onResponse(
-                        call: Call<PODServerResponseData>,
-                        response: Response<PODServerResponseData>
+                            call: Call<PODServerResponseData>,
+                            response: Response<PODServerResponseData>
                     ) {
                         if (response.isSuccessful && response.body() != null) {
                             liveDataForViewToObserve.value =

@@ -1,4 +1,4 @@
-package com.example.gb_material.web
+package com.example.gb_material.web.pod
 
 import com.google.gson.annotations.SerializedName
 

@@ -3,4 +3,7 @@
     <string name="wiki_hint">Поиск в Wikipedia</string>
     <string name="baw_theme_menu">Черно-белая тема</string>
     <string name="colourful_theme_menu">Цветная тема</string>
+    <string name="picture_of_the_day">APOD</string>
+    <string name="earth_camera">EPIC</string>
+    <string name="settings">Settings</string>
 </resources>
