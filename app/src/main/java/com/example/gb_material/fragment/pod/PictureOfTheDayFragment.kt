@@ -9,8 +9,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.DatePicker
+import android.widget.TextView
 import android.widget.Toast
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -19,18 +19,16 @@ import coil.api.load
 import com.example.gb_material.R
 import com.example.gb_material.web.pod.PictureOfTheDayData
 import com.example.gb_material.web.pod.sdf
-import com.google.android.material.bottomsheet.BottomSheetBehavior
-import kotlinx.android.synthetic.main.bottom_sheet.*
 import kotlinx.android.synthetic.main.pod_fragment.*
 import java.util.*
 
 const val dateFieldName = "date"
 
-class PictureOfTheDayFragment(var date: String?): Fragment(), DatePickerDialog.OnDateSetListener {
-    constructor() : this(null)
-
-    private lateinit var bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout>
+class PictureOfTheDayFragment(var date: String?, var bottom_sheet_description_header: TextView?, var bottom_sheet_description: TextView?): Fragment(), DatePickerDialog.OnDateSetListener {
+    constructor() : this(null, null, null)
     private var datePickerDialog : DialogFragment? = null
+    private var description_header: String? = null
+    private var description: String? = null
 
     private val viewModel: PictureOfTheDayViewModel by lazy {
         ViewModelProviders.of(this).get(PictureOfTheDayViewModel::class.java)
@@ -72,7 +70,6 @@ class PictureOfTheDayFragment(var date: String?): Fragment(), DatePickerDialog.O
                 data = Uri.parse("https://en.wikipedia.org/wiki/${et_wiki.text.toString()}")
             })
         }
-        setBottomSheetBehavior(view.findViewById(R.id.bottom_sheet_container))
         web_view.settings.javaScriptEnabled = true
     }
 
@@ -103,15 +100,16 @@ class PictureOfTheDayFragment(var date: String?): Fragment(), DatePickerDialog.O
                         }
                     }
                 }
-                bottom_sheet_description_header.text = serverResponseData.title
-                bottom_sheet_description.text = serverResponseData.explanation
+                description_header = serverResponseData.title
+                description = serverResponseData.explanation
+                updateDescription()
             }
         }
     }
 
-    private fun setBottomSheetBehavior(bottomSheet: ConstraintLayout) {
-        bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
-        bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+    private fun updateDescription() {
+        bottom_sheet_description_header?.text = description_header
+        bottom_sheet_description?.text = description
     }
 
     override fun onDateSet(view: DatePicker, year: Int, month: Int, day: Int) {
@@ -133,5 +131,10 @@ class PictureOfTheDayFragment(var date: String?): Fragment(), DatePickerDialog.O
             // Create a new instance of DatePickerDialog and return it
             return DatePickerDialog(requireContext(), listener, year, month, day)
         }
+    }
+
+    override fun onResume() {
+        updateDescription()
+        super.onResume()
     }
 }

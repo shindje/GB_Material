@@ -68,4 +68,6 @@ dependencies {
     implementation("io.coil-kt:coil:0.9.2")
 
     implementation 'androidx.appcompat:appcompat:1.0.0'
+
+    implementation "androidx.coordinatorlayout:coordinatorlayout:1.1.0"
 }

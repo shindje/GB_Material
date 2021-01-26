@@ -37,5 +37,6 @@ class EPICViewPagerFragment : Fragment() {
                 }
             }
         })
+        nest_scrollview.isFillViewport = true
     }
 }
