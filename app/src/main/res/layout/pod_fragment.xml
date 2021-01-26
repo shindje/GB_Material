@@ -13,58 +13,61 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/input_layout_wiki"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             app:counterEnabled="true"
             app:counterMaxLength="20"
             app:endIconMode="clear_text"
-            app:startIconDrawable="@drawable/ic_wikipedia"
-            app:startIconCheckable="true"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            app:startIconCheckable="true"
+            app:startIconDrawable="@drawable/ic_wikipedia">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_wiki"
-                android:textColor="?edit_text_color"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/wiki_hint" />
+                android:hint="@string/wiki_hint"
+                android:textColor="?edit_text_color" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/date_picker_layout"
-            android:layout_width="match_parent"
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tv_pod_date"
+            style="@style/header_text"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:textColor="?header_text_color"
+            app:layout_constraintBottom_toTopOf="@+id/barrier"
+            app:layout_constraintEnd_toStartOf="@+id/btn_show_date_picker_dlg"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/input_layout_wiki">
+            app:layout_constraintTop_toBottomOf="@id/input_layout_wiki"
+            tools:text="2020-01-01" />
 
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/tv_pod_date"
-                style="@style/header_text"
-                android:textColor="?header_text_color"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="2020-01-01" />
+        <ImageButton
+            android:id="@+id/btn_show_date_picker_dlg"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/tv_pod_date"
+            app:layout_constraintTop_toBottomOf="@id/input_layout_wiki"
+            app:layout_constraintWidth_percent="0.4"
+            app:srcCompat="@android:drawable/ic_menu_my_calendar" />
 
-            <ImageButton
-                android:id="@+id/btn_show_date_picker_dlg"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/tv_pod_date"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@android:drawable/ic_menu_my_calendar" />
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/barrier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="tv_pod_date,btn_show_date_picker_dlg" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/group_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:constraint_referenced_ids="tv_pod_date,btn_show_date_picker_dlg" />
 
         <com.example.gb_material.EquilateralImageView
             android:id="@+id/eiv_pod"
@@ -73,18 +76,18 @@
             android:layout_marginTop="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/date_picker_layout"
+            app:layout_constraintTop_toBottomOf="@id/barrier"
             app:srcCompat="@drawable/ic_baseline_image_not_supported_24" />
 
         <WebView
             android:id="@+id/web_view"
-            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="350dp"
             android:layout_marginTop="8dp"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/date_picker_layout" />
+            app:layout_constraintTop_toBottomOf="@id/barrier" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

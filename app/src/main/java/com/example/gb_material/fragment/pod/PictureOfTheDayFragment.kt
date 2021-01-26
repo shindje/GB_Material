@@ -52,7 +52,7 @@ class PictureOfTheDayFragment(var date: String?): Fragment(), DatePickerDialog.O
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         if (date != null) {
-            date_picker_layout.visibility = View.GONE
+            group_date.visibility = View.GONE
             viewModel.getData(date).observe(viewLifecycleOwner, Observer<PictureOfTheDayData> { renderData(it) })
         } else {
             input_layout_wiki.visibility = View.GONE
