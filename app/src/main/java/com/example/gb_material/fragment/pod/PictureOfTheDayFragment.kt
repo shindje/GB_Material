@@ -53,7 +53,7 @@ class PictureOfTheDayFragment(var date: String?, var bottom_sheet_description_he
             group_date.visibility = View.GONE
             viewModel.getData(date).observe(viewLifecycleOwner, Observer<PictureOfTheDayData> { renderData(it) })
         } else {
-            input_layout_wiki.visibility = View.GONE
+            wiki_motion_layout.visibility = View.GONE
             tv_pod_date.text = sdf.format(Date())
             btn_show_date_picker_dlg.setOnClickListener {
                 if (datePickerDialog == null)
