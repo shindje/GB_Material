@@ -97,6 +97,10 @@ class PictureOfTheDayFragment(var date: String?, var bottom_sheet_description_he
                             lifecycle(this@PictureOfTheDayFragment)
                             error(R.drawable.ic_baseline_image_not_supported_24)
                             placeholder(R.drawable.ic_baseline_sync_24)
+                            target {
+                                eiv_motion_layout.transitionToStart()
+                                eiv_pod.setImageDrawable(it)
+                            }
                         }
                     }
                 }
@@ -113,6 +117,7 @@ class PictureOfTheDayFragment(var date: String?, var bottom_sheet_description_he
     }
 
     override fun onDateSet(view: DatePicker, year: Int, month: Int, day: Int) {
+        eiv_motion_layout.transitionToEnd()
         val calendar = Calendar.getInstance()
         calendar.set(year, month, day)
         val date = sdf.format(calendar.time)

@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-        <com.google.android.material.textfield.TextInputLayout
+    <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/input_layout_wiki"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
@@ -65,15 +65,26 @@
             android:layout_height="wrap_content"
             app:constraint_referenced_ids="tv_pod_date,btn_show_date_picker_dlg" />
 
-        <com.example.gb_material.EquilateralImageView
-            android:id="@+id/eiv_pod"
+        <androidx.constraintlayout.motion.widget.MotionLayout
+            android:id="@+id/eiv_motion_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/barrier"
-            app:srcCompat="@drawable/ic_baseline_image_not_supported_24" />
+            app:layoutDescription="@xml/pod_fragment_eiv_scene"
+            app:layout_constraintTop_toBottomOf="@id/barrier">
+
+            <com.example.gb_material.EquilateralImageView
+                android:id="@+id/eiv_pod"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_baseline_image_not_supported_24" />
+
+        </androidx.constraintlayout.motion.widget.MotionLayout>
 
         <WebView
             android:id="@+id/web_view"
@@ -85,4 +96,4 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/barrier" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
