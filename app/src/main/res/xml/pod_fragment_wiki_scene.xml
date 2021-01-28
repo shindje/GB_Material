@@ -2,10 +2,13 @@
 <MotionScene xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <Transition
-        app:constraintSetEnd="@layout/pod_fragment_end"
-        app:constraintSetStart="@layout/pod_fragment"
+        app:constraintSetEnd="@layout/page_container_end"
+        app:constraintSetStart="@layout/page_container"
         app:duration="1000">
 
-        <OnClick app:targetId="@id/wiki_button" />
+        <OnSwipe
+            app:touchAnchorId="@id/wiki_button"
+            app:touchAnchorSide="top"
+            app:dragDirection="dragLeft"/>
     </Transition>
 </MotionScene>

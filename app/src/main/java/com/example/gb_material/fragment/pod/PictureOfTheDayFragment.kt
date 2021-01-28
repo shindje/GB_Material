@@ -17,6 +17,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import coil.api.load
 import com.example.gb_material.R
+import com.example.gb_material.fragment.view_pager.PODViewPagerFragment
 import com.example.gb_material.web.pod.PictureOfTheDayData
 import com.example.gb_material.web.pod.sdf
 import kotlinx.android.synthetic.main.pod_fragment.*
@@ -24,8 +25,8 @@ import java.util.*
 
 const val dateFieldName = "date"
 
-class PictureOfTheDayFragment(var date: String?, var bottom_sheet_description_header: TextView?, var bottom_sheet_description: TextView?): Fragment(), DatePickerDialog.OnDateSetListener {
-    constructor() : this(null, null, null)
+class PictureOfTheDayFragment(var date: String?, var viewPagerFragment: PODViewPagerFragment?): Fragment(), DatePickerDialog.OnDateSetListener {
+    constructor() : this(null, null)
     private var datePickerDialog : DialogFragment? = null
     private var description_header: String? = null
     private var description: String? = null
@@ -50,10 +51,11 @@ class PictureOfTheDayFragment(var date: String?, var bottom_sheet_description_he
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         if (date != null) {
+            viewPagerFragment?.changeWikiVisibility(View.VISIBLE)
             group_date.visibility = View.GONE
             viewModel.getData(date).observe(viewLifecycleOwner, Observer<PictureOfTheDayData> { renderData(it) })
         } else {
-            wiki_motion_layout.visibility = View.GONE
+            viewPagerFragment?.changeWikiVisibility(View.GONE)
             tv_pod_date.text = sdf.format(Date())
             btn_show_date_picker_dlg.setOnClickListener {
                 if (datePickerDialog == null)
@@ -65,11 +67,6 @@ class PictureOfTheDayFragment(var date: String?, var bottom_sheet_description_he
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        input_layout_wiki.setStartIconOnClickListener {
-            startActivity(Intent(Intent.ACTION_VIEW).apply {
-                data = Uri.parse("https://en.wikipedia.org/wiki/${et_wiki.text.toString()}")
-            })
-        }
         web_view.settings.javaScriptEnabled = true
     }
 
@@ -106,14 +103,9 @@ class PictureOfTheDayFragment(var date: String?, var bottom_sheet_description_he
                 }
                 description_header = serverResponseData.title
                 description = serverResponseData.explanation
-                updateDescription()
+                viewPagerFragment?.updateBottomSheet(description_header, description)
             }
         }
-    }
-
-    private fun updateDescription() {
-        bottom_sheet_description_header?.text = description_header
-        bottom_sheet_description?.text = description
     }
 
     override fun onDateSet(view: DatePicker, year: Int, month: Int, day: Int) {
@@ -139,7 +131,7 @@ class PictureOfTheDayFragment(var date: String?, var bottom_sheet_description_he
     }
 
     override fun onResume() {
-        updateDescription()
+        viewPagerFragment?.updateBottomSheet(description_header, description)
         super.onResume()
     }
 }

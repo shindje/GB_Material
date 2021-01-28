@@ -6,51 +6,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.constraintlayout.motion.widget.MotionLayout
-        android:id="@+id/wiki_motion_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layoutDescription="@xml/pod_fragment_wiki_scene"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/wiki_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="10dp"
-            app:layout_constraintBottom_toBottomOf="@+id/input_layout_wiki"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/input_layout_wiki"
-            app:srcCompat="@drawable/ic_wikipedia" />
-
-        <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/input_layout_wiki"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                app:counterEnabled="true"
-                app:counterMaxLength="20"
-                app:endIconMode="clear_text"
-                app:layout_constraintStart_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:startIconCheckable="true"
-                app:startIconDrawable="@drawable/ic_wikipedia">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_wiki"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/wiki_hint"
-                    android:textColor="?edit_text_color" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-    </androidx.constraintlayout.motion.widget.MotionLayout>
-
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tv_pod_date"
         style="@style/header_text"
