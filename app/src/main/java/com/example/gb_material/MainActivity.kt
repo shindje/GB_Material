@@ -61,11 +61,19 @@ class MainActivity : AppCompatActivity() {
         return true
     }
 
-    public fun changeTheme(themeId: Int) {
+    fun changeTheme(themeId: Int) {
         var prefs = applicationContext.getSharedPreferences(sharedPreferencesName, MODE_PRIVATE)
         val editor = prefs.edit()
         editor.putInt(themeIdFieldName, themeId)
         editor.apply()
         recreate()
+    }
+
+    fun changeArrowImageVisibility(visibility: Int) {
+        iv_arrow_down.visibility = visibility
+    }
+
+    fun changeArrowImageSelected(selected: Boolean) {
+        iv_arrow_down.isSelected = selected
     }
 }

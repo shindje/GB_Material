@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.example.gb_material.MainActivity
 import com.example.gb_material.R
 import com.example.gb_material.fragment.epic.EarthCameraViewModel
 import com.example.gb_material.fragment.view_pager.adapter.EPICViewPagerAdapter
@@ -23,7 +24,7 @@ class EPICViewPagerFragment : Fragment() {
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.page_container_end, container, false)
+        return inflater.inflate(R.layout.page_container, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -39,5 +40,6 @@ class EPICViewPagerFragment : Fragment() {
         })
         nest_scrollview.isFillViewport = true
         wiki_motion_layout.visibility = View.GONE
+        (activity as MainActivity).changeArrowImageVisibility(View.GONE)
     }
 }

@@ -21,6 +21,7 @@ class SettingsFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
         btn_btw_theme.setOnClickListener { (requireActivity() as MainActivity).changeTheme(R.style.BlackAndWhiteTheme) }
         btn_color_theme.setOnClickListener { (requireActivity() as MainActivity).changeTheme(R.style.ColourfulTheme) }
+        (activity as MainActivity).changeArrowImageVisibility(View.GONE)
     }
 
 }
