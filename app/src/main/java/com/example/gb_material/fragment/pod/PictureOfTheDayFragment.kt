@@ -35,12 +35,6 @@ class PictureOfTheDayFragment(var date: String?, var viewPagerFragment: PODViewP
         ViewModelProviders.of(this).get(PictureOfTheDayViewModel::class.java)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        if (date == null)
-            date = savedInstanceState?.getString(dateFieldName)
-    }
-
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
@@ -51,11 +45,10 @@ class PictureOfTheDayFragment(var date: String?, var viewPagerFragment: PODViewP
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         if (date != null) {
-            viewPagerFragment?.changeWikiVisibility(View.VISIBLE)
             group_date.visibility = View.GONE
             viewModel.getData(date).observe(viewLifecycleOwner, Observer<PictureOfTheDayData> { renderData(it) })
+            savedInstanceState?.putString(dateFieldName, date)
         } else {
-            viewPagerFragment?.changeWikiVisibility(View.GONE)
             tv_pod_date.text = sdf.format(Date())
             btn_show_date_picker_dlg.setOnClickListener {
                 if (datePickerDialog == null)
@@ -73,6 +66,12 @@ class PictureOfTheDayFragment(var date: String?, var viewPagerFragment: PODViewP
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putString(dateFieldName, date)
+    }
+
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        super.onViewStateRestored(savedInstanceState)
+        if (date == null)
+            date = savedInstanceState?.getString(dateFieldName)
     }
 
     private fun renderData(data: PictureOfTheDayData) {
@@ -132,6 +131,10 @@ class PictureOfTheDayFragment(var date: String?, var viewPagerFragment: PODViewP
 
     override fun onResume() {
         viewPagerFragment?.updateBottomSheet(description_header, description)
+        if (date != null)
+            viewPagerFragment?.changeWikiVisibility(View.VISIBLE)
+        else
+            viewPagerFragment?.changeWikiVisibility(View.GONE)
         super.onResume()
     }
 }
