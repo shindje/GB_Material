@@ -1,9 +1,11 @@
 package com.example.gb_material.fragment.view_pager.adapter
 
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.example.gb_material.fragment.pod.PictureOfTheDayFragment
+import com.example.gb_material.fragment.view_pager.PODViewPagerFragment
 import com.example.gb_material.web.pod.sdf
 import java.util.*
 
@@ -11,13 +13,13 @@ private const val YESTERDAY = 0
 private const val TODAY = 1
 private const val DATE = 2
 
-class PODViewPagerAdapter(private val fragmentManager: FragmentManager) :
+class PODViewPagerAdapter(fragmentManager: FragmentManager, viewPagerFragment: PODViewPagerFragment?) :
         FragmentPagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
     private val fragments = arrayOf(
-            PictureOfTheDayFragment(sdf.format(Date(System.currentTimeMillis() - 24*60*60*1000))),
-            PictureOfTheDayFragment(sdf.format(Date())),
-            PictureOfTheDayFragment(null)
+            PictureOfTheDayFragment(sdf.format(Date(System.currentTimeMillis() - 24*60*60*1000)), viewPagerFragment),
+            PictureOfTheDayFragment(sdf.format(Date()), viewPagerFragment),
+            PictureOfTheDayFragment(null, viewPagerFragment)
     )
 
     override fun getItem(position: Int): Fragment {

@@ -23,7 +23,7 @@ class EPICViewPagerFragment : Fragment() {
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.page_container, container, false)
+        return inflater.inflate(R.layout.page_container_end, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -37,5 +37,7 @@ class EPICViewPagerFragment : Fragment() {
                 }
             }
         })
+        nest_scrollview.isFillViewport = true
+        wiki_motion_layout.visibility = View.GONE
     }
 }

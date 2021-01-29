@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <Transition
+        app:constraintSetEnd="@layout/page_container_end"
+        app:constraintSetStart="@layout/page_container"
+        app:duration="1000">
+
+        <OnSwipe
+            app:touchAnchorId="@id/wiki_button"
+            app:touchAnchorSide="top"
+            app:dragDirection="dragLeft"/>
+    </Transition>
+</MotionScene>

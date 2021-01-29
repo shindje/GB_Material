@@ -9,28 +9,27 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.DatePicker
+import android.widget.TextView
 import android.widget.Toast
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import coil.api.load
 import com.example.gb_material.R
+import com.example.gb_material.fragment.view_pager.PODViewPagerFragment
 import com.example.gb_material.web.pod.PictureOfTheDayData
 import com.example.gb_material.web.pod.sdf
-import com.google.android.material.bottomsheet.BottomSheetBehavior
-import kotlinx.android.synthetic.main.bottom_sheet.*
 import kotlinx.android.synthetic.main.pod_fragment.*
 import java.util.*
 
 const val dateFieldName = "date"
 
-class PictureOfTheDayFragment(var date: String?): Fragment(), DatePickerDialog.OnDateSetListener {
-    constructor() : this(null)
-
-    private lateinit var bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout>
+class PictureOfTheDayFragment(var date: String?, var viewPagerFragment: PODViewPagerFragment?): Fragment(), DatePickerDialog.OnDateSetListener {
+    constructor() : this(null, null)
     private var datePickerDialog : DialogFragment? = null
+    private var description_header: String? = null
+    private var description: String? = null
 
     private val viewModel: PictureOfTheDayViewModel by lazy {
         ViewModelProviders.of(this).get(PictureOfTheDayViewModel::class.java)
@@ -52,10 +51,11 @@ class PictureOfTheDayFragment(var date: String?): Fragment(), DatePickerDialog.O
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         if (date != null) {
-            date_picker_layout.visibility = View.GONE
+            viewPagerFragment?.changeWikiVisibility(View.VISIBLE)
+            group_date.visibility = View.GONE
             viewModel.getData(date).observe(viewLifecycleOwner, Observer<PictureOfTheDayData> { renderData(it) })
         } else {
-            input_layout_wiki.visibility = View.GONE
+            viewPagerFragment?.changeWikiVisibility(View.GONE)
             tv_pod_date.text = sdf.format(Date())
             btn_show_date_picker_dlg.setOnClickListener {
                 if (datePickerDialog == null)
@@ -67,12 +67,6 @@ class PictureOfTheDayFragment(var date: String?): Fragment(), DatePickerDialog.O
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        input_layout_wiki.setStartIconOnClickListener {
-            startActivity(Intent(Intent.ACTION_VIEW).apply {
-                data = Uri.parse("https://en.wikipedia.org/wiki/${et_wiki.text.toString()}")
-            })
-        }
-        setBottomSheetBehavior(view.findViewById(R.id.bottom_sheet_container))
         web_view.settings.javaScriptEnabled = true
     }
 
@@ -100,21 +94,22 @@ class PictureOfTheDayFragment(var date: String?): Fragment(), DatePickerDialog.O
                             lifecycle(this@PictureOfTheDayFragment)
                             error(R.drawable.ic_baseline_image_not_supported_24)
                             placeholder(R.drawable.ic_baseline_sync_24)
+                            target {
+                                eiv_motion_layout.transitionToStart()
+                                eiv_pod.setImageDrawable(it)
+                            }
                         }
                     }
                 }
-                bottom_sheet_description_header.text = serverResponseData.title
-                bottom_sheet_description.text = serverResponseData.explanation
+                description_header = serverResponseData.title
+                description = serverResponseData.explanation
+                viewPagerFragment?.updateBottomSheet(description_header, description)
             }
         }
     }
 
-    private fun setBottomSheetBehavior(bottomSheet: ConstraintLayout) {
-        bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
-        bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
-    }
-
     override fun onDateSet(view: DatePicker, year: Int, month: Int, day: Int) {
+        eiv_motion_layout.transitionToEnd()
         val calendar = Calendar.getInstance()
         calendar.set(year, month, day)
         val date = sdf.format(calendar.time)
@@ -133,5 +128,10 @@ class PictureOfTheDayFragment(var date: String?): Fragment(), DatePickerDialog.O
             // Create a new instance of DatePickerDialog and return it
             return DatePickerDialog(requireContext(), listener, year, month, day)
         }
+    }
+
+    override fun onResume() {
+        viewPagerFragment?.updateBottomSheet(description_header, description)
+        super.onResume()
     }
 }
