@@ -42,14 +42,13 @@
         android:layout_height="wrap_content"
         app:constraint_referenced_ids="tv_pod_date,btn_show_date_picker_dlg" />
 
-    <androidx.constraintlayout.motion.widget.MotionLayout
-        android:id="@+id/eiv_motion_layout"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/eiv_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layoutDescription="@xml/pod_fragment_eiv_scene"
         app:layout_constraintTop_toBottomOf="@id/barrier">
 
         <com.example.gb_material.EquilateralImageView
@@ -61,7 +60,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_baseline_image_not_supported_24" />
 
-    </androidx.constraintlayout.motion.widget.MotionLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <WebView
         android:id="@+id/web_view"
