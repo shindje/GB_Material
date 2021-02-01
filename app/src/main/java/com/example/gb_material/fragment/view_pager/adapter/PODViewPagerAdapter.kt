@@ -1,6 +1,5 @@
 package com.example.gb_material.fragment.view_pager.adapter
 
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter

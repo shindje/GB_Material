@@ -2,19 +2,17 @@ package com.example.gb_material.fragment.pod
 
 import android.app.DatePickerDialog
 import android.app.Dialog
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.DatePicker
-import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.transition.TransitionManager
 import coil.api.load
 import com.example.gb_material.R
 import com.example.gb_material.fragment.view_pager.PODViewPagerFragment
@@ -94,8 +92,9 @@ class PictureOfTheDayFragment(var date: String?, var viewPagerFragment: PODViewP
                             error(R.drawable.ic_baseline_image_not_supported_24)
                             placeholder(R.drawable.ic_baseline_sync_24)
                             target {
-                                eiv_motion_layout.transitionToStart()
                                 eiv_pod.setImageDrawable(it)
+                                TransitionManager.beginDelayedTransition(eiv_layout)
+                                eiv_layout.visibility = View.VISIBLE
                             }
                         }
                     }
@@ -108,7 +107,9 @@ class PictureOfTheDayFragment(var date: String?, var viewPagerFragment: PODViewP
     }
 
     override fun onDateSet(view: DatePicker, year: Int, month: Int, day: Int) {
-        eiv_motion_layout.transitionToEnd()
+        TransitionManager.beginDelayedTransition(eiv_layout)
+        eiv_layout.visibility = View.GONE
+
         val calendar = Calendar.getInstance()
         calendar.set(year, month, day)
         val date = sdf.format(calendar.time)

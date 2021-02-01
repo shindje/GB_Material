@@ -6,21 +6,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
+import com.example.gb_material.MainActivity
 import com.example.gb_material.R
 import com.example.gb_material.fragment.view_pager.adapter.PODViewPagerAdapter
-import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.bottom_sheet.*
 import kotlinx.android.synthetic.main.page_container.*
-import kotlinx.android.synthetic.main.page_container.nest_scrollview
-import kotlinx.android.synthetic.main.page_container.pod_tab_layout
-import kotlinx.android.synthetic.main.page_container.pod_view_pager
-import kotlinx.android.synthetic.main.page_container.wiki_motion_layout
 
 class PODViewPagerFragment : Fragment() {
-    private lateinit var bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout>
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
@@ -34,23 +28,23 @@ class PODViewPagerFragment : Fragment() {
         pod_tab_layout.tabMode = TabLayout.MODE_FIXED
         pod_view_pager.adapter = PODViewPagerAdapter(childFragmentManager, this)
         pod_tab_layout.setupWithViewPager(pod_view_pager)
-        setBottomSheetBehavior(view.findViewById(R.id.bottom_sheet_container))
         nest_scrollview.isFillViewport = true
         input_layout_wiki.setStartIconOnClickListener {
             startActivity(Intent(Intent.ACTION_VIEW).apply {
                 data = Uri.parse("https://en.wikipedia.org/wiki/${et_wiki.text.toString()}")
             })
         }
+        (activity as MainActivity).changeArrowImageVisibility(View.VISIBLE)
+        nest_scrollview.setOnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
+            (activity as MainActivity).changeArrowImageSelected(nest_scrollview.canScrollVertically(1))
+        }
     }
 
-    private fun setBottomSheetBehavior(bottomSheet: ConstraintLayout) {
-        bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
-        bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
-    }
 
     fun updateBottomSheet(header: String?, description: String?) {
         bottom_sheet_description_header?.text = header
         bottom_sheet_description?.text = description
+        (activity as MainActivity).changeArrowImageSelected(true)
     }
 
     fun changeWikiVisibility(visibilty: Int) {
