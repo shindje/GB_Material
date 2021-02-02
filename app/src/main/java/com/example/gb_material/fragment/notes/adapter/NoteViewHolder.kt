@@ -11,7 +11,6 @@ class NoteViewHolder(view: View) : BaseViewHolder(view) {
         if (layoutPosition != RecyclerView.NO_POSITION) {
             itemView.header.text = data.headerText
             itemView.description.text = data.descriptionText
-//            itemView.wikiImageView.setOnClickListener { onListItemClickListener.onItemClick(data) }
         }
     }
 }

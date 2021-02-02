@@ -4,6 +4,7 @@
     <dimen name="text_size_header">14sp</dimen>
     <dimen name="text_size_common">14sp</dimen>
     <dimen name="padding_common">10dp</dimen>
+    <dimen name="padding_small">5dp</dimen>
     <dimen name="card_padding">2dp</dimen>
     <dimen name="card_corner_radius">2dp</dimen>
 </resources>
