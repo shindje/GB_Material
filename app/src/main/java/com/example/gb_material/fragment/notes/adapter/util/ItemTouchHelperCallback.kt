@@ -1,7 +1,8 @@
-package com.example.gb_material.fragment.notes.adapter
+package com.example.gb_material.fragment.notes.adapter.util
 
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.example.gb_material.fragment.notes.adapter.Adapter
 
 class ItemTouchHelperCallback (private val adapter: Adapter) :
         ItemTouchHelper.Callback() {

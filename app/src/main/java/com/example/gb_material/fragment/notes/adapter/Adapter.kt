@@ -4,16 +4,17 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.gb_material.R
 import com.example.gb_material.fragment.notes.Data
-import kotlinx.android.synthetic.main.recycler_item_note.view.*
+import com.example.gb_material.fragment.notes.adapter.util.*
 import kotlinx.android.synthetic.main.recycler_item_note.view.iv_delete
 import kotlinx.android.synthetic.main.recycler_item_note.view.iv_drag
 import kotlinx.android.synthetic.main.recycler_item_task.view.*
 
 class Adapter(
-        private var data: MutableList<Data>,
+        var data: MutableList<Data>,
         private val dragListener: OnStartDragListener
 ) :
         RecyclerView.Adapter<BaseViewHolder>(), ItemTouchHelperAdapter {
@@ -33,6 +34,24 @@ class Adapter(
         }
     }
 
+    override fun onBindViewHolder(
+            holder: BaseViewHolder,
+            position: Int,
+            payloads: MutableList<Any>
+    ) {
+        if (payloads.isEmpty())
+            super.onBindViewHolder(holder, position, payloads)
+        else {
+            val combinedChange =
+                    createCombinedPayload(payloads as List<Change<Data>>)
+            val oldData = combinedChange.oldData
+            val newData = combinedChange.newData
+
+            if (newData.isHighPriority != oldData.isHighPriority)
+                (holder as TaskViewHolder).showPriority(data[position].isHighPriority)
+        }
+    }
+
     override fun onBindViewHolder (holder: BaseViewHolder, position: Int) {
         holder.bind(data[position])
         holder.itemView.iv_delete.setOnClickListener {
@@ -46,14 +65,20 @@ class Adapter(
         }
         if (holder is TaskViewHolder) {
             holder.itemView.iv_priority_high.setOnClickListener {
-                data[holder.layoutPosition].isHighPriority = false
-                notifyItemChanged(holder.layoutPosition)
+                changePriority(holder.layoutPosition, false)
             }
             holder.itemView.iv_priority_low.setOnClickListener {
-                data[holder.layoutPosition].isHighPriority = true
-                notifyItemChanged(holder.layoutPosition)
+                changePriority(holder.layoutPosition, true)
             }
         }
+    }
+
+    private fun changePriority(position: Int, newPriority: Boolean) {
+        val newData = mutableListOf<Data>()
+        newData.addAll(data)
+        newData[position] = data[position].clone()
+        newData[position].isHighPriority = newPriority
+        setItems(newData)
     }
 
     override fun getItemCount(): Int {
@@ -84,7 +109,7 @@ class Adapter(
 
     override fun onItemMove(fromPosition: Int, toPosition: Int) {
         data.removeAt(fromPosition).apply {
-            data.add(if (toPosition > fromPosition) toPosition - 1 else toPosition, this)
+            data.add(toPosition, this)
         }
         notifyItemMoved(fromPosition, toPosition)
     }
@@ -92,5 +117,12 @@ class Adapter(
     override fun onItemDismiss(position: Int) {
         data.removeAt(position)
         notifyItemRemoved(position)
+    }
+
+    fun setItems(newItems: List<Data>) {
+        val result = DiffUtil.calculateDiff(DiffUtilCallback(data, newItems))
+        result.dispatchUpdatesTo(this)
+        data.clear()
+        data.addAll(newItems)
     }
 }

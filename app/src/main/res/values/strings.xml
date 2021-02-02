@@ -7,4 +7,7 @@
     <string name="earth_camera">EPIC</string>
     <string name="settings">Settings</string>
     <string name="notes">Заметки</string>
+    <string name="filter_notes">Заметки</string>
+    <string name="filter_tasks">Дела</string>
+    <string name="filter_high_priority">Важные</string>
 </resources>
