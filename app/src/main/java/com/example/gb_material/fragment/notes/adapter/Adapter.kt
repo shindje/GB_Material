@@ -8,6 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.gb_material.R
 import com.example.gb_material.fragment.notes.Data
 import kotlinx.android.synthetic.main.recycler_item_note.view.*
+import kotlinx.android.synthetic.main.recycler_item_note.view.iv_delete
+import kotlinx.android.synthetic.main.recycler_item_note.view.iv_drag
+import kotlinx.android.synthetic.main.recycler_item_task.view.*
 
 class Adapter(
         private var data: MutableList<Data>,
@@ -41,6 +44,16 @@ class Adapter(
                 dragListener.onStartDrag(holder)
             false
         }
+        if (holder is TaskViewHolder) {
+            holder.itemView.iv_priority_high.setOnClickListener {
+                data[holder.layoutPosition].isHighPriority = false
+                notifyItemChanged(holder.layoutPosition)
+            }
+            holder.itemView.iv_priority_low.setOnClickListener {
+                data[holder.layoutPosition].isHighPriority = true
+                notifyItemChanged(holder.layoutPosition)
+            }
+        }
     }
 
     override fun getItemCount(): Int {
@@ -55,7 +68,8 @@ class Adapter(
         Data(maxId++,
             if (isTask) null else "Note " + maxId,
             if (isTask) "Task " + maxId else "Note text " + maxId,
-            isTask
+            isTask,
+            if (isTask) false else null
         )
 
     fun add(isTask: Boolean) {

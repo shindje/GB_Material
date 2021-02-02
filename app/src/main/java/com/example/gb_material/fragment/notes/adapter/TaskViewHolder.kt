@@ -10,7 +10,15 @@ class TaskViewHolder(view: View) : BaseViewHolder(view) {
     override fun bind(data: Data) {
         if (layoutPosition != RecyclerView.NO_POSITION) {
             itemView.text.text = data.descriptionText
-//            itemView.wikiImageView.setOnClickListener { onListItemClickListener.onItemClick(data) }
+            data.isHighPriority?.apply {
+                if (this) {
+                    itemView.iv_priority_high.visibility = View.VISIBLE
+                    itemView.iv_priority_low.visibility = View.GONE
+                } else {
+                    itemView.iv_priority_high.visibility = View.GONE
+                    itemView.iv_priority_low.visibility = View.VISIBLE
+                }
+            }
         }
     }
 }

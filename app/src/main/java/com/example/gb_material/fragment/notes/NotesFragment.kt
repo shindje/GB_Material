@@ -27,10 +27,10 @@ class NotesFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val data = arrayListOf(
-                Data(1, "Note 1", "text Note 1", false),
-                Data(2, "Note 2", "text Note 2", false),
-                Data(3, null, "Task 3", true),
-                Data(4, null, "Task 4", true),
+                Data(1, "Note 1", "text Note 1", false, null),
+                Data(2, "Note 2", "text Note 2", false, null),
+                Data(3, null, "Task 3", true, true),
+                Data(4, null, "Task 4", true, false),
         )
         recycler.layoutManager = LinearLayoutManager(context)
         val adapter = Adapter(
