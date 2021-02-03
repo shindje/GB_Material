@@ -3,6 +3,8 @@ package com.example.gb_material.fragment.view_pager
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.text.Spannable
+import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -38,16 +40,13 @@ class PODViewPagerFragment : Fragment() {
         nest_scrollview.setOnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
             (activity as MainActivity).changeArrowImageSelected(nest_scrollview.canScrollVertically(1))
         }
+        bottom_sheet_description.movementMethod = LinkMovementMethod()
     }
 
 
-    fun updateBottomSheet(header: String?, description: String?) {
+    fun updateBottomSheet(header: String?, description: Spannable?) {
         bottom_sheet_description_header?.text = header
         bottom_sheet_description?.text = description
         (activity as MainActivity).changeArrowImageSelected(true)
-    }
-
-    fun changeWikiVisibility(visibilty: Int) {
-        wiki_motion_layout.visibility = visibilty
     }
 }

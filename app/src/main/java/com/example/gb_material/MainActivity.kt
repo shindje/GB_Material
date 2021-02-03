@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity() {
                 else -> false
             }
         }
-        bottom_navigation_view.selectedItemId = R.id.bottom_view_notes
+        bottom_navigation_view.selectedItemId = R.id.bottom_view_pod
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
