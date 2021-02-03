@@ -5,6 +5,7 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.example.gb_material.fragment.SettingsFragment
+import com.example.gb_material.fragment.notes.NotesFragment
 import com.example.gb_material.fragment.view_pager.EPICViewPagerFragment
 import com.example.gb_material.fragment.view_pager.PODViewPagerFragment
 import kotlinx.android.synthetic.main.activity_main.*
@@ -22,6 +23,12 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         bottom_navigation_view.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
+                R.id.bottom_view_notes -> {
+                    supportFragmentManager.beginTransaction()
+                            .replace(R.id.fragments_container, NotesFragment())
+                            .commitAllowingStateLoss()
+                    true
+                }
                 R.id.bottom_view_pod -> {
                     supportFragmentManager.beginTransaction()
                             .replace(R.id.fragments_container, PODViewPagerFragment())
@@ -43,7 +50,7 @@ class MainActivity : AppCompatActivity() {
                 else -> false
             }
         }
-        bottom_navigation_view.selectedItemId = R.id.bottom_view_pod
+        bottom_navigation_view.selectedItemId = R.id.bottom_view_notes
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
