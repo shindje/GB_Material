@@ -3,6 +3,7 @@ package com.example.gb_material.fragment.pod
 import android.app.DatePickerDialog
 import android.app.Dialog
 import android.os.Bundle
+import android.text.Spannable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,7 +28,7 @@ class PictureOfTheDayFragment(var date: String?, var viewPagerFragment: PODViewP
     constructor() : this(null, null)
     private var datePickerDialog : DialogFragment? = null
     private var description_header: String? = null
-    private var description: String? = null
+    private var description: Spannable? = null
 
     private val viewModel: PictureOfTheDayViewModel by lazy {
         ViewModelProviders.of(this).get(PictureOfTheDayViewModel::class.java)
@@ -100,7 +101,7 @@ class PictureOfTheDayFragment(var date: String?, var viewPagerFragment: PODViewP
                     }
                 }
                 description_header = serverResponseData.title
-                description = serverResponseData.explanation
+                description = makeSpanLinks(serverResponseData.explanation, context)
                 viewPagerFragment?.updateBottomSheet(description_header, description)
             }
         }
@@ -132,10 +133,6 @@ class PictureOfTheDayFragment(var date: String?, var viewPagerFragment: PODViewP
 
     override fun onResume() {
         viewPagerFragment?.updateBottomSheet(description_header, description)
-        if (date != null)
-            viewPagerFragment?.changeWikiVisibility(View.VISIBLE)
-        else
-            viewPagerFragment?.changeWikiVisibility(View.GONE)
         super.onResume()
     }
 }

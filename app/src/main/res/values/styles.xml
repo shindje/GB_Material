@@ -6,12 +6,14 @@
     </style>
     <style name="small_text" parent="paddings">
         <item name="android:textSize">@dimen/text_size_small</item>
+        <item name="android:fontFamily">@font/special_elite</item>
     </style>
     <style name="common_text">
         <item name="android:textSize">@dimen/text_size_common</item>
     </style>
     <style name="header_text" parent="paddings">
         <item name="android:textSize">@dimen/text_size_header</item>
+        <item name="android:fontFamily">@font/arbutus</item>
         <item name="android:textStyle">bold</item>
         <item name="android:layout_marginTop">5dp</item>
     </style>
