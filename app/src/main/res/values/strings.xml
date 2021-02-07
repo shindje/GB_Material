@@ -10,4 +10,5 @@
     <string name="filter_notes">Заметки</string>
     <string name="filter_tasks">Дела</string>
     <string name="filter_high_priority">Важные</string>
+    <string name="select">Выбрать</string>
 </resources>
