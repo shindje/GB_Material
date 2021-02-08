@@ -76,7 +76,7 @@ class Adapter(
     private fun changePriority(position: Int, newPriority: Boolean) {
         val newData = mutableListOf<Data>()
         newData.addAll(data)
-        newData[position] = data[position].clone()
+        newData[position] = data[position].copy()
         newData[position].isHighPriority = newPriority
         setItems(newData)
     }

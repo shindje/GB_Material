@@ -15,14 +15,12 @@ class TaskViewHolder(view: View) : BaseViewHolder(view) {
     }
 
     fun showPriority(isHigh: Boolean?) {
-        isHigh?.apply {
-            if (this) {
-                itemView.iv_priority_high.visibility = View.VISIBLE
-                itemView.iv_priority_low.visibility = View.GONE
-            } else {
-                itemView.iv_priority_high.visibility = View.GONE
-                itemView.iv_priority_low.visibility = View.VISIBLE
-            }
+        if (isHigh == true) {
+            itemView.iv_priority_high.visibility = View.VISIBLE
+            itemView.iv_priority_low.visibility = View.GONE
+        } else {
+            itemView.iv_priority_high.visibility = View.GONE
+            itemView.iv_priority_low.visibility = View.VISIBLE
         }
     }
 }

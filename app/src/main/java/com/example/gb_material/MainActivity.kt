@@ -11,14 +11,14 @@ import com.example.gb_material.fragment.view_pager.PODViewPagerFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 const val sharedPreferencesName: String = "app"
-const val themeIdFieldName: String = "themeId"
+const val themeFieldName: String = "theme"
 
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         var prefs = applicationContext.getSharedPreferences(sharedPreferencesName, MODE_PRIVATE)
-        var themeId = prefs.getInt(themeIdFieldName, R.style.BlackAndWhiteTheme)
+        var themeId = getThemeIdByName(prefs.getString(themeFieldName, "BlackAndWhiteTheme"))
         setTheme(themeId)
         setContentView(R.layout.activity_main)
         bottom_navigation_view.setOnNavigationItemSelectedListener { item ->
@@ -71,7 +71,7 @@ class MainActivity : AppCompatActivity() {
     fun changeTheme(themeId: Int) {
         var prefs = applicationContext.getSharedPreferences(sharedPreferencesName, MODE_PRIVATE)
         val editor = prefs.edit()
-        editor.putInt(themeIdFieldName, themeId)
+        editor.putString(themeFieldName, getThemeNameById(themeId))
         editor.apply()
         recreate()
     }
@@ -83,4 +83,18 @@ class MainActivity : AppCompatActivity() {
     fun changeArrowImageSelected(selected: Boolean) {
         iv_arrow_down.isSelected = selected
     }
+
+    private fun getThemeNameById(themeId: Int) =
+        when(themeId) {
+            R.style.BlackAndWhiteTheme -> "BlackAndWhiteTheme"
+            R.style.ColourfulTheme -> "ColourfulTheme"
+            else -> null
+        }
+
+    private fun getThemeIdByName(themeName: String?) =
+            when(themeName) {
+                "BlackAndWhiteTheme" -> R.style.BlackAndWhiteTheme
+                "ColourfulTheme" -> R.style.ColourfulTheme
+                else -> R.style.BlackAndWhiteTheme
+            }
 }
