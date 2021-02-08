@@ -25,4 +25,7 @@
         <item name="edit_text_color">@color/dark_yellow</item>
         <item name="background_color">@color/light_teal</item>
     </style>
+    <style name="Splash" parent="Theme.GB_Material">
+        <item name="android:windowBackground">@drawable/splash_background_drawable</item>
+    </style>
 </resources>

@@ -15,19 +15,20 @@
         app:layout_constraintBottom_toTopOf="@+id/barrier"
         app:layout_constraintEnd_toStartOf="@+id/btn_show_date_picker_dlg"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/wiki_motion_layout"
+        app:layout_constraintTop_toTopOf="parent"
         tools:text="2020-01-01" />
 
-    <ImageButton
+    <Button
         android:id="@+id/btn_show_date_picker_dlg"
-        android:layout_width="0dp"
+        app:icon="@android:drawable/ic_menu_my_calendar"
+        android:text="@string/select"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/tv_pod_date"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/tv_pod_date"
-        app:layout_constraintTop_toBottomOf="@id/wiki_motion_layout"
-        app:layout_constraintWidth_percent="0.4"
-        app:srcCompat="@android:drawable/ic_menu_my_calendar" />
+        app:layout_constraintBottom_toTopOf="@+id/barrier"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.Barrier
         android:id="@+id/barrier"
